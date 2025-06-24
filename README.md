@@ -38,7 +38,7 @@ Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. D
 - `Adj Close`: Harga yang disesuaikan
 - `Volume`: Jumlah saham yang diperdagangkan
 
-### Visualisasi Tren Harga Penutupan
+### Visualisasi Tren Harga Saham UNVR
 
 ```python
 plt.figure(figsize=(12,6))
@@ -101,6 +101,50 @@ Model ini dipilih karena keunggulannya dalam mempelajari pola sekuensial data hi
 
 ---
 
+## Prediction 🔮
+Setelah model LSTM berhasil dilatih, selanjutnya melakukan prediksi harga saham untuk 10 hari ke depan. Proses ini tidak hanya memprediksi satu langkah ke depan, tetapi menggunakan pendekatan recursive forecasting, yaitu memprediksi hari pertama, lalu menggunakan prediksi tersebut sebagai input untuk memprediksi hari kedua, dan seterusnya hingga hari ke-10.
+
+```python
+last_60_days = scaled_data[-60:]
+future_input = last_60_days.values.reshape(1, 60, 1)
+
+future_predictions = []
+for _ in range(10):
+    pred = model.predict(future_input)[0]
+    future_predictions.append(pred)
+    future_input = np.append(future_input[:, 1:, :], [[pred]], axis=1)
+
+future_predictions = scaler.inverse_transform(future_predictions)
+```
+
+## Visualisai Hasil Prediksi
+Selanjutnya adalah memvisualisasikan harga historis 100 hari terakhir bersamaan dengan hasil prediksi 10 hari ke depan. Garis putus-putus berwarna oranye menunjukkan tren hasil prediksi dari model LSTM.
+
+```python
+# Membuat range tanggal untuk 10 hari ke depan
+future_dates = pd.date_range(start=close_prices.index[-1] + pd.Timedelta(days=1), periods=10)
+
+# Gabungkan harga terakhir + hasil prediksi
+combined_prices = [close_prices.iloc[-1]['Close']] + future_predictions.flatten().tolist()
+combined_dates = [close_prices.index[-1]] + list(future_dates)
+
+combined_df = pd.DataFrame({'Price': combined_prices}, index=combined_dates)
+
+# Visualisasikan
+plt.figure(figsize=(12,6))
+plt.plot(close_prices[-100:], label='Historis', color='blue')
+plt.plot(combined_df, label='Prediksi 10 Hari', color='orange', linestyle='--')
+plt.title('Prediksi Harga Saham UNVR 10 Hari ke Depan')
+plt.xlabel('Tanggal')
+plt.ylabel('Harga (IDR)')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+<img width="609" alt="image" src="https://github.com/user-attachments/assets/4c17f1fe-f2d7-47fa-8530-596084760c77" />
+
+
+
 ## Evaluation
 
 ### Metrik Evaluasi
@@ -138,6 +182,9 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+<img width="608" alt="image" src="https://github.com/user-attachments/assets/2818907c-1eea-426c-aa70-9ce1f2d01077" />
+
+
 
 ## Kesimpulan
 
