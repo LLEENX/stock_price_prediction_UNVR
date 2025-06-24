@@ -39,7 +39,7 @@ Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. D
 - `Volume`: Jumlah saham yang diperdagangkan
 
 ### Kondisi Dataset
-Dataset yang digunakan memiliki jumlah total 3.900 baris data dan 7 kolom (fitur). Periode data mencakup 1 Januari 2010 hingga 24 Juni 2025.
+Dataset yang digunakan memiliki jumlah total sekitar 3.900 baris data dan 7 kolom (fitur). Periode data mencakup 1 Januari 2010 hingga 24 Juni 2025.
 
 Berikut informasi kualitas data:
 
