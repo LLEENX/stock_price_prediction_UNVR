@@ -55,7 +55,7 @@ plt.show()
 
 ### Seleksi Kolom Target
 
-Saya memilih kolom `Close` sebagai target prediksi.
+Saya memilih kolom `Close` sebagai target prediksi. Kolom lain seperti Open, High, Low dan Volume tidak digunakan dalam model ini.
 
 ### Normalisasi Data
 
@@ -77,4 +77,61 @@ for i in range(n_past, len(scaled_data)):
     X.append(scaled_data[i - n_past:i])
     y.append(scaled_data[i])
 X, y = np.array(X), np.array(y)
+```
+
+## Modeling
+
+### Model LSTM
+
+Model dibangun menggunakan 2 lapisan LSTM (64 dan 32 unit) dan 1 Dense layer.
+
+```python
+model = Sequential()
+model.add(LSTM(64, return_sequences=True, input_shape=(X.shape[1], 1)))
+model.add(LSTM(32))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(X, y, epochs=20, batch_size=32)
+```
+
+Model ini dipilih karena keunggulannya dalam mempelajari pola sekuensial data historis.
+
+---
+
+## Evaluation
+
+### Metrik Evaluasi
+
+Model dievaluasi menggunakan MSE, RMSE, MAE, dan MAPE:
+
+```python
+mse = mean_squared_error(actual_prices, predicted_prices)
+rmse = np.sqrt(mse)
+mae = mean_absolute_error(actual_prices, predicted_prices)
+mape = np.mean(np.abs((actual_prices - predicted_prices) / actual_prices)) * 100
+```
+
+### Hasil Evaluasi
+
+| Metrik | Nilai    | Keterangan                                               |
+|--------|----------|----------------------------------------------------------|
+| MSE    | 15450.06 | Kesalahan kuadrat rata-rata cukup rendah                 |
+| RMSE   | 124.30   | Rata-rata kesalahan prediksi dalam satuan harga          |
+| MAE    | 88.44    | Selisih rata-rata absolut antara prediksi dan aktual     |
+| MAPE   | 3.37%    | Model memiliki tingkat akurasi tinggi dengan error kecil |
+
+---
+
+### Visualisasi Prediksi vs Aktual
+
+```python
+plt.figure(figsize=(12,6))
+plt.plot(test_data.index[n_past:], actual_prices, label='Aktual', color='blue')
+plt.plot(test_data.index[n_past:], predicted_prices, label='Prediksi', color='orange', linestyle='--')
+plt.title('Perbandingan Harga Aktual vs Prediksi pada Data Uji')
+plt.xlabel('Tanggal')
+plt.ylabel('Harga (IDR)')
+plt.legend()
+plt.grid(True)
+plt.show()
 ```
