@@ -135,3 +135,17 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+
+## Kesimpulan
+
+Proyek ini berhasil membangun model prediksi harga saham PT Unilever Indonesia Tbk (UNVR.JK) menggunakan metode Long Short-Term Memory (LSTM), yang merupakan bagian dari deep learning. Berdasarkan evaluasi menggunakan metrik MSE, RMSE, MAE, dan MAPE, model menunjukkan performa yang cukup baik dengan tingkat akurasi tinggi (MAPE sebesar 3.37%).
+
+Dengan menggunakan data historis sejak tahun 2010 dan pendekatan time series menggunakan window 60 hari, model mampu mempelajari pola pergerakan harga saham dan memberikan estimasi harga 10 hari ke depan secara relatif akurat. Hal ini membuktikan bahwa metode LSTM efektif untuk digunakan dalam pemodelan data runtun waktu di sektor keuangan.
+
+Ke depan, model dapat dikembangkan lebih lanjut dengan:
+- Menambahkan fitur eksternal seperti indikator teknikal (MACD, RSI, dll),
+- Menyesuaikan arsitektur model (misalnya menggunakan GRU atau Attention-based models),
+- Menambahkan validasi silang dan fine-tuning hyperparameter lebih optimal.
+
+Proyek ini menjadi langkah awal yang solid dalam menerapkan machine learning untuk pengambilan keputusan investasi berbasis data.
+
