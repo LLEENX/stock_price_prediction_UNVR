@@ -49,3 +49,32 @@ plt.ylabel('Harga (IDR)')
 plt.grid(True)
 plt.legend()
 plt.show()
+```
+
+## Data Preparation
+
+### Seleksi Kolom Target
+
+Saya memilih kolom `Close` sebagai target prediksi.
+
+### Normalisasi Data
+
+Data dinormalisasi dengan `MinMaxScaler` agar berada dalam rentang 0-1.
+
+```python
+scaler = MinMaxScaler()
+scaled_data = scaler.fit_transform(close_prices)
+```
+
+### Membentuk Data Time Series
+
+Saya menggunakan sliding window 60 hari untuk membentuk data input untuk model LSTM.
+
+```python
+n_past = 60
+X, y = [], []
+for i in range(n_past, len(scaled_data)):
+    X.append(scaled_data[i - n_past:i])
+    y.append(scaled_data[i])
+X, y = np.array(X), np.array(y)
+```
