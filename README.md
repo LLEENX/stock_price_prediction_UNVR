@@ -10,8 +10,8 @@ Menurut hasil riset dari Guresen et al., 2011, LSTM terbukti efektif dalam menan
 
 ### Problem Statements
 
-- Bagaimana memprediksi harga saham harian UNVR di masa depan berdasarkan data historis?
-- Bagaimana membangun model deep learning (LSTM) yang mampu mempelajari pola harga saham?
+- Bagaimana cara memprediksi tren harga saham PT Unilever Indonesia Tbk (UNVR.JK) yang sangat fluktuatif, dengan mempertimbangkan pola historis yang kompleks dan bersifat non-linear?
+- Apakah model LSTM mampu menghasilkan prediksi jangka pendek yang cukup akurat untuk membantu investor retail dalam mengambil keputusan beli/jual, dibandingkan pendekatan tradisional seperti moving average?
 
 ### Goals
 
@@ -193,18 +193,20 @@ Hasil evaluasi model menunjukkan nilai error yang rendah:
 - MAPE sebesar 3.37%, yang artinya rata-rata kesalahan prediksi hanya sekitar 3% dari nilai aktual.
 - RMSE dan MAE masing-masing sebesar 124.30 dan 88.44, masih dalam batas toleransi pergerakan harga saham harian UNVR.
 
-Kaitan dengan Problem Statements dan Goals:
+✅ Kaitan dengan Problem Statements dan Goals
+- Problem Statement 1 (Memprediksi harga harian UNVR):
+Model LSTM yang dibangun berhasil memprediksi harga saham dengan akurasi tinggi, dibuktikan oleh nilai MAPE sebesar 3.37%, yang termasuk dalam kategori error rendah untuk kasus prediksi pasar saham.
 
-- ✔️ Problem Statement 1 (memperkirakan harga harian UNVR):
-Model berhasil memprediksi harga saham dengan akurasi tinggi.
-- ✔️ Problem Statement 2 (membangun model yang mempelajari pola harga):
-LSTM mampu mengenali pola jangka pendek dan menengah dari harga saham sebelumnya, menunjukkan bahwa model mampu belajar pola dari data historis.
-- ✔️ Goals (prediksi 10 hari ke depan):
-Model digunakan untuk membuat prediksi multi-step ke depan, dan hasilnya menunjukkan tren yang selaras dengan harga aktual.
+- Problem Statement 2 (Membangun model yang mampu mempelajari pola harga):
+LSTM mampu menangkap pola historis dan tren jangka pendek hingga menengah dalam data harga saham, karena memori jangka panjangnya secara struktural cocok dengan data time series seperti ini.
 
-Dampak terhadap Business Goals:
-- Investor dapat menggunakan prediksi ini sebagai salah satu referensi dalam pengambilan keputusan beli/jual.
-- Prediksi jangka pendek ini juga dapat membantu manajemen risiko investasi, terutama dalam strategi harian atau mingguan.
+- Goals (Prediksi 10 hari ke depan):
+Model berhasil melakukan prediksi multi-step (10 hari ke depan) menggunakan teknik recursive forecasting, dengan hasil prediksi yang konsisten terhadap tren historis.
+
+💡 Dampak terhadap Business Goals
+- Model ini memberikan alat bantu kuantitatif bagi investor dalam menganalisis arah pergerakan harga saham jangka pendek, sehingga dapat mendukung pengambilan keputusan beli/jual yang lebih terinformasi.
+- Dalam konteks manajemen risiko investasi, prediksi harga 10 hari ke depan juga dapat digunakan untuk menghindari keputusan spekulatif, khususnya bagi investor ritel yang lebih rentan terhadap volatilitas pasar.
+- Keberhasilan model dalam memprediksi tren harga memberikan nilai praktis bagi pengembangan sistem pendukung keputusan (Decision Support System) di sektor keuangan.
 
 ### Visualisasi Prediksi vs Aktual
 
