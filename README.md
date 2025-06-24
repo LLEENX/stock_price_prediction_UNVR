@@ -1,53 +1,46 @@
-Laporan Proyek Machine Learning - Rifal Ariya Yusuftrian
+# Laporan Proyek Machine Learning - Rifal Ariya Yusuftrian
 
-Domain Proyek
+## Domain Proyek
 
 Saya memilih proyek prediksi harga saham PT Unilever Indonesia Tbk (UNVR.JK) menggunakan metode Long Short-Term Memory (LSTM), yang merupakan bagian dari deep learning. Permasalahan ini sangat relevan karena prediksi harga saham dapat digunakan oleh investor maupun pelaku pasar modal untuk menentukan strategi investasi yang lebih tepat.
 
 Menurut hasil riset dari Guresen et al., 2011, LSTM terbukti efektif dalam menangani data runtun waktu seperti harga saham karena kemampuannya mengingat informasi historis dalam jangka panjang.
 
-Business Understanding
+## Business Understanding
 
-Problem Statements
+### Problem Statements
 
-Bagaimana memprediksi harga saham harian UNVR di masa depan berdasarkan data historis?
+- Bagaimana memprediksi harga saham harian UNVR di masa depan berdasarkan data historis?
+- Bagaimana membangun model deep learning (LSTM) yang mampu mempelajari pola harga saham?
 
-Bagaimana membangun model deep learning (LSTM) yang mampu mempelajari pola harga saham?
+### Goals
 
-Goals
+- Menghasilkan prediksi harga saham UNVR 10 hari ke depan.
+- Membangun model LSTM dengan akurasi tinggi berdasarkan data historis dari tahun 2010.
 
-Menghasilkan prediksi harga saham UNVR 10 hari ke depan.
+### Solution Statement
 
-Membangun model LSTM dengan akurasi tinggi berdasarkan data historis dari tahun 2010.
+- Saya menggunakan model LSTM untuk menangani data time series karena sifat arsitekturnya yang cocok dalam memahami pola historis.
+- Model diimprove melalui pemilihan parameter seperti jumlah neuron LSTM dan jumlah epoch.
 
-Solution Statement
+## Data Understanding
 
-Saya menggunakan model LSTM untuk menangani data time series karena sifat arsitekturnya yang cocok dalam memahami pola historis.
+Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. Dataset ini mencakup periode dari 1 Januari 2010 hingga 24 Juni 2025, dan memiliki lebih dari 500 baris data.
 
-Model diimprove melalui pemilihan parameter seperti jumlah neuron LSTM dan jumlah epoch.
+🔗 [Yahoo Finance - UNVR.JK](https://finance.yahoo.com/quote/UNVR.JK/history)
 
-Data Understanding
+### Fitur pada dataset:
 
-Saya menggunakan data harga saham harian UNVR dari Yahoo Finance. Dataset ini mencakup periode dari 1 Januari 2010 hingga 24 Juni 2025, dan memiliki lebih dari 500 baris data.
+- `Open`: Harga saat pembukaan
+- `High`: Harga tertinggi harian
+- `Low`: Harga terendah harian
+- `Close`: Harga penutupan
+- `Adj Close`: Harga yang disesuaikan
+- `Volume`: Jumlah saham yang diperdagangkan
 
-Link sumber data: Yahoo Finance - UNVR.JK
+### Visualisasi Tren Harga Penutupan
 
-Fitur pada dataset:
-
-Open: Harga saat pembukaan
-
-High: Harga tertinggi harian
-
-Low: Harga terendah harian
-
-Close: Harga penutupan
-
-Adj Close: Harga yang disesuaikan
-
-Volume: Jumlah saham yang diperdagangkan
-
-Visualisasi Tren Harga Penutupan
-
+```python
 plt.figure(figsize=(12,6))
 plt.plot(data['Close'], label='Harga Penutupan (Close)', color='blue')
 plt.title('Tren Harga Penutupan Saham UNVR')
@@ -56,67 +49,3 @@ plt.ylabel('Harga (IDR)')
 plt.grid(True)
 plt.legend()
 plt.show()
-
-Data Preparation
-
-Seleksi Kolom Target
-
-Saya memilih kolom Close sebagai target prediksi.
-
-Normalisasi Data
-
-Data dinormalisasi dengan MinMaxScaler agar berada dalam rentang 0-1.
-
-scaler = MinMaxScaler()
-scaled_data = scaler.fit_transform(close_prices)
-
-Membentuk Data Time Series
-
-Saya menggunakan sliding window 60 hari untuk membentuk data input untuk model LSTM.
-
-n_past = 60
-X, y = [], []
-for i in range(n_past, len(scaled_data)):
-    X.append(scaled_data[i - n_past:i])
-    y.append(scaled_data[i])
-X, y = np.array(X), np.array(y)
-
-Modeling
-
-Model LSTM
-
-Model dibangun menggunakan 2 lapisan LSTM (64 dan 32 unit) dan 1 Dense layer.
-
-model = Sequential()
-model.add(LSTM(64, return_sequences=True, input_shape=(X.shape[1], 1)))
-model.add(LSTM(32))
-model.add(Dense(1))
-model.compile(optimizer='adam', loss='mean_squared_error')
-model.fit(X, y, epochs=20, batch_size=32)
-
-Model ini dipilih karena keunggulannya dalam mempelajari pola sekuensial data historis.
-
-Evaluation
-
-Metrik Evaluasi
-
-Model dievaluasi menggunakan MSE, RMSE, MAE, dan MAPE:
-
-mse = mean_squared_error(actual_prices, predicted_prices)
-rmse = np.sqrt(mse)
-mae = mean_absolute_error(actual_prices, predicted_prices)
-mape = np.mean(np.abs((actual_prices - predicted_prices) / actual_prices)) * 100
-
-Hasil Evaluasi
-
-MSE  : 15450.06
-
-RMSE : 124.30
-
-MAE  : 88.44
-
-MAPE : 3.37%
-
-Nilai MAPE 3.37% menunjukkan bahwa model cukup akurat dalam memprediksi harga saham UNVR.
-
-Visualisasi Prediksi vs Aktual
