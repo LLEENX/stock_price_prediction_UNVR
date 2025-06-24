@@ -193,7 +193,7 @@ Hasil evaluasi model menunjukkan nilai error yang rendah:
 - MAPE sebesar 3.37%, yang artinya rata-rata kesalahan prediksi hanya sekitar 3% dari nilai aktual.
 - RMSE dan MAE masing-masing sebesar 124.30 dan 88.44, masih dalam batas toleransi pergerakan harga saham harian UNVR.
 
-✅ Kaitan dengan Problem Statements dan Goals
+### ✅ Kaitan dengan Problem Statements dan Goals
 - Problem Statement 1 (Memprediksi harga harian UNVR):
 Model LSTM yang dibangun berhasil memprediksi harga saham dengan akurasi tinggi, dibuktikan oleh nilai MAPE sebesar 3.37%, yang termasuk dalam kategori error rendah untuk kasus prediksi pasar saham.
 
@@ -203,7 +203,7 @@ LSTM mampu menangkap pola historis dan tren jangka pendek hingga menengah dalam 
 - Goals (Prediksi 10 hari ke depan):
 Model berhasil melakukan prediksi multi-step (10 hari ke depan) menggunakan teknik recursive forecasting, dengan hasil prediksi yang konsisten terhadap tren historis.
 
-💡 Dampak terhadap Business Goals
+### 💡 Dampak terhadap Business Goals
 - Model ini memberikan alat bantu kuantitatif bagi investor dalam menganalisis arah pergerakan harga saham jangka pendek, sehingga dapat mendukung pengambilan keputusan beli/jual yang lebih terinformasi.
 - Dalam konteks manajemen risiko investasi, prediksi harga 10 hari ke depan juga dapat digunakan untuk menghindari keputusan spekulatif, khususnya bagi investor ritel yang lebih rentan terhadap volatilitas pasar.
 - Keberhasilan model dalam memprediksi tren harga memberikan nilai praktis bagi pengembangan sistem pendukung keputusan (Decision Support System) di sektor keuangan.
