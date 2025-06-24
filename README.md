@@ -25,7 +25,7 @@ Menurut hasil riset dari Guresen et al., 2011, LSTM terbukti efektif dalam menan
 
 ## Data Understanding
 
-Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. Dataset ini mencakup periode dari 1 Januari 2010 hingga 24 Juni 2025, dan memiliki lebih dari 500 baris data.
+Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. Dataset ini mencakup periode dari 1 Januari 2010 hingga 24 Juni 2025.
 
 🔗 [Yahoo Finance - UNVR.JK](https://finance.yahoo.com/quote/UNVR.JK/history)
 
@@ -37,6 +37,17 @@ Dataset yang digunakan adalah data harga saham harian UNVR dari Yahoo Finance. D
 - `Close`: Harga penutupan
 - `Adj Close`: Harga yang disesuaikan
 - `Volume`: Jumlah saham yang diperdagangkan
+
+### Kondisi Dataset
+Dataset yang digunakan memiliki jumlah total 3.900 baris data dan 7 kolom (fitur). Periode data mencakup 1 Januari 2010 hingga 24 Juni 2025.
+
+Berikut informasi kualitas data:
+
+- Missing Values (Null):
+Hasil pemeriksaan menggunakan data.isnull().sum() menunjukkan bahwa tidak terdapat missing values pada semua kolom, sehingga tidak diperlukan proses imputasi data.
+
+- Duplikasi:
+Pemeriksaan menggunakan data.duplicated().sum() menunjukkan bahwa tidak ditemukan baris data yang duplikat.
 
 ### Visualisasi Tren Harga Saham UNVR
 
@@ -51,7 +62,6 @@ plt.legend()
 plt.show()
 ```
 <img width="611" alt="image" src="https://github.com/user-attachments/assets/80394c65-6117-4338-9a12-de2345044ab5" />
-
 
 
 ## Data Preparation
@@ -86,7 +96,18 @@ X, y = np.array(X), np.array(y)
 
 ### Model LSTM
 
-Model dibangun menggunakan 2 lapisan LSTM (64 dan 32 unit) dan 1 Dense layer.
+LSTM (Long Short-Term Memory) adalah salah satu jenis Recurrent Neural Network (RNN) yang dirancang untuk memproses data runtun waktu. LSTM memiliki kemampuan untuk mengingat informasi jangka panjang melalui struktur khusus yang disebut cell state, forget gate, input gate, dan output gate.
+
+Dalam konteks proyek ini, LSTM mampu mempelajari pola historis dari harga saham yang bersifat time series. Misalnya, jika harga saham biasanya naik setelah penurunan selama 3 hari, LSTM dapat belajar dari pola tersebut dan menggunakannya untuk membuat prediksi masa depan.
+
+Model dibangun menggunakan:
+
+- 2 lapisan LSTM dengan 64 dan 32 unit neuron.
+- 1 lapisan Dense output dengan 1 neuron untuk menghasilkan nilai prediksi harga saham.
+- Optimizer: adam, karena cepat dan stabil dalam konvergensi.
+- Loss function: mean_squared_error yang umum untuk regresi.
+
+Pemilihan LSTM didasarkan pada kecocokan arsitekturnya dengan data sekuensial seperti harga saham, serta hasil riset sebelumnya yang menunjukkan keunggulan LSTM dalam memprediksi data keuangan.
 
 ```python
 model = Sequential()
@@ -96,8 +117,6 @@ model.add(Dense(1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(X, y, epochs=20, batch_size=32)
 ```
-
-Model ini dipilih karena keunggulannya dalam mempelajari pola sekuensial data historis.
 
 ---
 
@@ -168,6 +187,24 @@ mape = np.mean(np.abs((actual_prices - predicted_prices) / actual_prices)) * 100
 | MAPE   | 3.37%    | Model memiliki tingkat akurasi tinggi dengan error kecil |
 
 ---
+
+Interpretasi Hasil Evaluasi dalam Konteks Business Understanding
+Hasil evaluasi model menunjukkan nilai error yang rendah:
+- MAPE sebesar 3.37%, yang artinya rata-rata kesalahan prediksi hanya sekitar 3% dari nilai aktual.
+- RMSE dan MAE masing-masing sebesar 124.30 dan 88.44, masih dalam batas toleransi pergerakan harga saham harian UNVR.
+
+Kaitan dengan Problem Statements dan Goals:
+
+- ✔️ Problem Statement 1 (memperkirakan harga harian UNVR):
+Model berhasil memprediksi harga saham dengan akurasi tinggi.
+- ✔️ Problem Statement 2 (membangun model yang mempelajari pola harga):
+LSTM mampu mengenali pola jangka pendek dan menengah dari harga saham sebelumnya, menunjukkan bahwa model mampu belajar pola dari data historis.
+- ✔️ Goals (prediksi 10 hari ke depan):
+Model digunakan untuk membuat prediksi multi-step ke depan, dan hasilnya menunjukkan tren yang selaras dengan harga aktual.
+
+Dampak terhadap Business Goals:
+- Investor dapat menggunakan prediksi ini sebagai salah satu referensi dalam pengambilan keputusan beli/jual.
+- Prediksi jangka pendek ini juga dapat membantu manajemen risiko investasi, terutama dalam strategi harian atau mingguan.
 
 ### Visualisasi Prediksi vs Aktual
 
