@@ -103,18 +103,16 @@ LSTM (Long Short-Term Memory) adalah salah satu jenis Recurrent Neural Network (
 
 Setiap unit LSTM memiliki tiga komponen utama yang disebut *gate*, yaitu:
 
-### 🔸 Forget Gate (fₜ)
+# 🔸 Forget Gate (fₜ)
 - Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell state*) sebelumnya.
 - Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
 
-### 🔸 Input Gate (iₜ) + Candidate Value (ĉₜ)
+# 🔸 Input Gate (iₜ) + Candidate Value (ĉₜ)
 - Mengontrol informasi baru apa yang akan ditambahkan ke memori.
 - *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
 
-### 🔸 Output Gate (oₜ)
+# 🔸 Output Gate (oₜ)
 - Memutuskan informasi apa yang akan digunakan sebagai output pada *timestep* ini dan diteruskan ke unit berikutnya.
-
-> 💡 Mekanisme ini membuat LSTM mirip seperti otak kecil yang bisa memilih apa yang perlu diingat dan dilupakan, tergantung pada konteks saat itu.
 
 ---
 
