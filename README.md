@@ -107,6 +107,19 @@ Setiap unit LSTM memiliki tiga komponen utama yang disebut *gate*, yaitu:
 - Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell state*) sebelumnya.
 - Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
 
+$$
+f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+$$
+
+- \( f_t \): nilai antara 0 dan 1 yang menentukan seberapa besar informasi sebelumnya dilupakan.
+- \( h_{t-1} \): output dari langkah sebelumnya.
+- \( x_t \): input saat ini.
+- \( W_f \): bobot forget gate.
+- \( b_f \): bias forget gate.
+- \( \sigma \): fungsi aktivasi sigmoid.
+
+---
+
 ### 🔸 Input Gate (iₜ) + Candidate Value (ĉₜ)
 - Mengontrol informasi baru apa yang akan ditambahkan ke memori.
 - *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
