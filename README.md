@@ -134,7 +134,7 @@ $$
 Rumus candidate value:
 
 $$
-\tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
+ĉ = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
 $$
 
 
