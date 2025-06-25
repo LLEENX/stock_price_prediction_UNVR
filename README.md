@@ -124,12 +124,12 @@ $$
 Mengontrol informasi baru apa yang akan ditambahkan ke memori.
 *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
 
-Rumus input gate:
+Rumus input gate:<br>
 $$
 i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
 $$
 
-Rumus candidate value:
+Rumus candidate value:<br>
 $$
 \tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
 $$
