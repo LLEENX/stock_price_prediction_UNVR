@@ -111,12 +111,12 @@ $$
 f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)
 $$
 
-- \( f_t \): nilai antara 0 dan 1 yang menentukan seberapa besar informasi sebelumnya dilupakan.
-- \( h_{t-1} \): output dari langkah sebelumnya.
-- \( x_t \): input saat ini.
-- \( W_f \): bobot forget gate.
-- \( b_f \): bias forget gate.
-- \( \sigma \): fungsi aktivasi sigmoid.
+- fₜ: nilai antara 0 dan 1 yang menentukan seberapa besar informasi sebelumnya dilupakan
+- hₜ₋₁: output dari langkah sebelumnya
+- xₜ: input saat ini
+- W_f: bobot forget gate
+- b_f: bias forget gate
+- σ: fungsi aktivasi sigmoid
 
 ---
 
@@ -134,7 +134,7 @@ $$
 Rumus candidate value:
 
 $$
-ĉ = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
+ĉₜ = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
 $$
 
 
@@ -153,8 +153,8 @@ $$
 C_t = f_t \cdot C_{t-1} + i_t \cdot \tilde{C}_t
 $$
 
-- \( C_t \): *cell state* saat ini.
-- \( C_{t-1} \): *cell state* sebelumnya.
+- Cₜ: cell state saat ini
+- Cₜ₋₁: cell state sebelumnya
 
 ---
 
@@ -166,8 +166,8 @@ o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \\
 h_t = o_t \cdot \tanh(C_t)
 $$
 
-- \( o_t \): gate yang mengontrol output saat ini.
-- \( h_t \): *hidden state* atau output untuk timestep ini.
+- oₜ: gate yang mengontrol output saat ini
+- hₜ: hidden state atau output untuk timestep ini
 
 > 💡 Mekanisme ini membuat LSTM mirip seperti otak kecil yang bisa memilih apa yang perlu diingat dan dilupakan, tergantung pada konteks saat itu.
 
