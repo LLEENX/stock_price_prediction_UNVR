@@ -127,9 +127,6 @@ Mengontrol informasi baru apa yang akan ditambahkan ke memori.
 $$
 i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
 $$
-$$
-\tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
-$$
 
 - \( i_t \): seberapa besar informasi baru yang disimpan.  
 - \( \tilde{C}_t \): kandidat informasi baru yang ingin ditambahkan ke *cell state*.  
