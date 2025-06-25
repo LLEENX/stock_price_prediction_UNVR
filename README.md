@@ -124,14 +124,14 @@ $$
 Mengontrol informasi baru apa yang akan ditambahkan ke memori.
 *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
 
-  $$
+$$
 i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \\
 \tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
 $$
 
-- \( i_t \): seberapa besar informasi baru yang disimpan.
-- \( \tilde{C}_t \): kandidat informasi baru yang ingin ditambahkan ke *cell state*.
-- \( W_i, W_C \): bobot input gate dan candidate.
+- \( i_t \): seberapa besar informasi baru yang disimpan.  
+- \( \tilde{C}_t \): kandidat informasi baru yang ingin ditambahkan ke *cell state*.  
+- \( W_i, W_C \): bobot input gate dan candidate.  
 - \( b_i, b_C \): bias masing-masing.
 
 ---
