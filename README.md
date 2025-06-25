@@ -104,8 +104,8 @@ LSTM (Long Short-Term Memory) adalah salah satu jenis Recurrent Neural Network (
 Setiap unit LSTM memiliki tiga komponen utama yang disebut *gate*, yaitu:
 
 ### 🔸 Forget Gate (fₜ)
-- Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell state*) sebelumnya.
-- Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
+Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell state*) sebelumnya.
+Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
 
 $$
 f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
@@ -121,13 +121,49 @@ $$
 ---
 
 ### 🔸 Input Gate (iₜ) + Candidate Value (ĉₜ)
-- Mengontrol informasi baru apa yang akan ditambahkan ke memori.
-- *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
+Mengontrol informasi baru apa yang akan ditambahkan ke memori.
+*Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
 
-### 🔸 Output Gate (oₜ)
-- Memutuskan informasi apa yang akan digunakan sebagai output pada *timestep* ini dan diteruskan ke unit berikutnya.
+  $$
+i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \\
+\tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
+$$
+
+- \( i_t \): seberapa besar informasi baru yang disimpan.
+- \( \tilde{C}_t \): kandidat informasi baru yang ingin ditambahkan ke *cell state*.
+- \( W_i, W_C \): bobot input gate dan candidate.
+- \( b_i, b_C \): bias masing-masing.
 
 ---
+
+### Memperbarui Cell State (Cₜ)
+
+Menggabungkan informasi dari *forget gate* dan *input gate*:
+
+$$
+C_t = f_t \cdot C_{t-1} + i_t \cdot \tilde{C}_t
+$$
+
+- \( C_t \): *cell state* saat ini.
+- \( C_{t-1} \): *cell state* sebelumnya.
+
+---
+
+### 🔸 Output Gate (oₜ)
+Menentukan output dan informasi ke langkah selanjutnya:
+
+$$
+o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \\
+h_t = o_t \cdot \tanh(C_t)
+$$
+
+- \( o_t \): gate yang mengontrol output saat ini.
+- \( h_t \): *hidden state* atau output untuk timestep ini.
+
+> 💡 Mekanisme ini membuat LSTM mirip seperti otak kecil yang bisa memilih apa yang perlu diingat dan dilupakan, tergantung pada konteks saat itu.
+
+---
+
 
 ## 🔁 Contoh Kasus Time Series
 
