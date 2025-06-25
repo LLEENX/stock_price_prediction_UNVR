@@ -108,7 +108,7 @@ Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell 
 Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
 
 $$
-f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)
 $$
 
 - \( f_t \): nilai antara 0 dan 1 yang menentukan seberapa besar informasi sebelumnya dilupakan.
