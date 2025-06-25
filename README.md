@@ -96,16 +96,49 @@ X, y = np.array(X), np.array(y)
 
 ### Model LSTM
 
-LSTM (Long Short-Term Memory) adalah salah satu jenis Recurrent Neural Network (RNN) yang dirancang untuk memproses data runtun waktu. LSTM memiliki kemampuan untuk mengingat informasi jangka panjang melalui struktur khusus yang disebut cell state, forget gate, input gate, dan output gate.
+Model LSTM (Long Short-Term Memory)
+LSTM (Long Short-Term Memory) adalah salah satu jenis Recurrent Neural Network (RNN) yang dirancang khusus untuk menangani data runtun waktu (time series) dengan kemampuan mengingat pola jangka panjang. Berbeda dari RNN biasa yang mudah mengalami vanishing gradient, LSTM memiliki struktur internal berupa "gate" yang memungkinkan kontrol atas informasi apa yang disimpan, dibuang, atau diteruskan ke langkah berikutnya.
 
-Dalam konteks proyek ini, LSTM mampu mempelajari pola historis dari harga saham yang bersifat time series. Misalnya, jika harga saham biasanya naik setelah penurunan selama 3 hari, LSTM dapat belajar dari pola tersebut dan menggunakannya untuk membuat prediksi masa depan.
+## 🔍 Cara Kerja Intuitif LSTM
+
+Setiap unit LSTM memiliki tiga komponen utama yang disebut *gate*, yaitu:
+
+### 🔸 Forget Gate (fₜ)
+- Menentukan informasi apa yang perlu dilupakan dari memori jangka panjang (*cell state*) sebelumnya.
+- Misalnya, jika tren lama tidak lagi relevan untuk prediksi ke depan, gate ini akan menurunkannya.
+
+### 🔸 Input Gate (iₜ) + Candidate Value (ĉₜ)
+- Mengontrol informasi baru apa yang akan ditambahkan ke memori.
+- *Candidate value* (ĉₜ) adalah informasi baru yang dihasilkan dari input saat ini dan akan disaring oleh *input gate* sebelum ditambahkan ke *cell state*.
+
+### 🔸 Output Gate (oₜ)
+- Memutuskan informasi apa yang akan digunakan sebagai output pada *timestep* ini dan diteruskan ke unit berikutnya.
+
+> 💡 Mekanisme ini membuat LSTM mirip seperti otak kecil yang bisa memilih apa yang perlu diingat dan dilupakan, tergantung pada konteks saat itu.
+
+---
+
+## 🔁 Contoh Kasus Time Series
+
+Dalam proyek **prediksi harga saham**:
+
+- LSTM akan melihat tren harga saham selama **60 hari terakhir**,
+- Menentukan pola historis penting (misalnya tren naik setelah koreksi 3 hari),
+- Mengingat pola tersebut menggunakan *cell state*,
+- Lalu memanfaatkannya untuk memprediksi harga ke depan.
+
+---
+
+## 🏗️ Arsitektur Model
 
 Model dibangun menggunakan:
 
-- 2 lapisan LSTM dengan 64 dan 32 unit neuron.
-- 1 lapisan Dense output dengan 1 neuron untuk menghasilkan nilai prediksi harga saham.
-- Optimizer: adam, karena cepat dan stabil dalam konvergensi.
-- Loss function: mean_squared_error yang umum untuk regresi.
+- **Dua lapisan LSTM:**
+  - Lapisan pertama: 64 unit, dengan `return_sequences=True` agar mengirim seluruh urutan ke lapisan berikutnya.
+  - Lapisan kedua: 32 unit.
+- **Satu lapisan Dense** sebagai output dengan 1 neuron untuk menghasilkan prediksi harga akhir.
+- **Optimizer**: `adam`, karena efisien dan cepat dalam konvergensi.
+- **Loss Function**: `mean_squared_error`, cocok untuk regresi nilai numerik.
 
 Pemilihan LSTM didasarkan pada kecocokan arsitekturnya dengan data sekuensial seperti harga saham, serta hasil riset sebelumnya yang menunjukkan keunggulan LSTM dalam memprediksi data keuangan.
 
